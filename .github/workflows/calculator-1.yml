@@ -44,12 +44,12 @@ jobs:
         targetdir: '${{ github.workspace }}/coveragereport'
         reporttypes: 'MarkdownSummaryGithub'
         verbosity: 'Verbose'
-        
+
     - name: Verify generated report files
-      run: ls -R coveragereport
+      run: ls -R $GITHUB_WORKSPACE/coveragereport
 
     - name: Upload coverage into summary
-      run: cat coveragereport/SummaryGithub.md >> $GITHUB_STEP_SUMMARY
+      run: cat $GITHUB_WORKSPACE/coveragereport/SummaryGithub.md >> $GITHUB_STEP_SUMMARY
 
     - name: Archive code coverage results
       uses: actions/upload-artifact@v4
