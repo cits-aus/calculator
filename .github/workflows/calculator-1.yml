@@ -33,7 +33,7 @@ jobs:
 
     - name: Convert .coverage to Cobertura
       run: |
-        if [ -f "TestResults/coverage.cobertura.xml" ]; then
+        if [ -f "TestResults/**/coverage.cobertura.xml" ]; then
           mv TestResults/coverage.cobertura.xml report.cobertura.xml
         else
           echo "Error: Cobertura report not found!"
