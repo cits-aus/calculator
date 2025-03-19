@@ -43,6 +43,10 @@ jobs:
         reports: '${{ github.workspace }}/report.cobertura.xml'
         targetdir: '${{ github.workspace }}/coveragereport'
         reporttypes: 'MarkdownSummaryGithub'
+        verbosity: 'Verbose'
+        
+    - name: Verify generated report files
+      run: ls -R coveragereport
 
     - name: Upload coverage into summary
       run: cat coveragereport/SummaryGithub.md >> $GITHUB_STEP_SUMMARY
