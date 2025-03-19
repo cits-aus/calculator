@@ -25,26 +25,23 @@ jobs:
     - name: Build
       run: dotnet build --no-restore
 
-    - name: Run Tests with Code Coverage
-      run: dotnet test --collect:"XPlat Code Coverage" --results-directory TestResults --no-build --verbosity normal
+    - name: Test
+      run: dotnet test --collect "Code Coverage" --results-directory TestResults --no-build --verbosity normal
 
-    - name: Verify Coverage Files
+    - name: Install dotnet-coverage
+      run: dotnet tool install -g dotnet-coverage
+
+    - name: Convert .coverage report to Cobertura
+      run: dotnet-coverage merge $GITHUB_WORKSPACE/Calculator.Core.Tests/TestResults/**/*.coverage -f cobertura -o $GITHUB_WORKSPACE/report.cobertura.xml
+    
+    - name: Check if coverage files exist
       run: ls -R TestResults
-
-    - name: Convert .coverage to Cobertura
-      run: |
-        if [ -f "TestResults/**/coverage.cobertura.xml" ]; then
-          mv TestResults/coverage.cobertura.xml report.cobertura.xml
-        else
-          echo "Error: Cobertura report not found!"
-          exit 1
-        fi
-
+    
     - name: ReportGenerator
       uses: danielpalme/ReportGenerator-GitHub-Action@5.2.0
       with:
-        reports: 'report.cobertura.xml'
-        targetdir: 'coveragereport'
+        reports: '${{ github.workspace }}/report.cobertura.xml'
+        targetdir: '${{ github.workspace }}/coveragereport'
         reporttypes: 'MarkdownSummaryGithub'
 
     - name: Upload coverage into summary
