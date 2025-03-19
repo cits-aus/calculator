@@ -32,7 +32,7 @@ jobs:
       run: dotnet tool install -g dotnet-coverage
 
     - name: Convert .coverage report to Cobertura
-      run: dotnet-coverage merge $GITHUB_WORKSPACE/Calculator.Core.Tests/TestResults/**/*.coverage -f cobertura -o $GITHUB_WORKSPACE/report.cobertura.xml
+      run: dotnet-coverage merge $GITHUB_WORKSPACE/Calculator/Calculator.Core.Tests/TestResults/**/*.coverage -f cobertura -o $GITHUB_WORKSPACE/report.cobertura.xml
     
     - name: Check if coverage files exist
       run: ls -R TestResults
