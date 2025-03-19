@@ -6,7 +6,7 @@ name: "Calculator Scenario 01"
 on:
   push:
     branches: [ "main" ]
-    paths: [ 'Calculator/**', 'Calculator/**', '.github/workflows/calculator-1.yml' ]
+    paths: [ 'Calculator/**', '.github/workflows/calculator-1.yml' ]
 
 jobs:
   build:
@@ -26,11 +26,11 @@ jobs:
     - name: Build
       run: dotnet build --no-restore
     - name: Test
-      run: dotnet test --collect "Code Coverage" --no-build --verbosity normal
+      run: dotnet test --collect "Code Coverage" --results-directory TestResults --no-build --verbosity normal
     - name: Install dotnet-coverage
       run: dotnet tool install -g dotnet-coverage
     - name: Convert .coverage report to cobertura
-      run: dotnet-coverage merge $GITHUB_WORKSPACE/Calculator/Calculator.Core.Tests/TestResults/**/*.coverage -f cobertura -o $GITHUB_WORKSPACE/report.cobertura.xml
+      run: dotnet-coverage merge TestResults/*.coverage -f cobertura -o report.cobertura.xml
     - name: ReportGenerator
       uses: danielpalme/ReportGenerator-GitHub-Action@5.2.0
       with:
@@ -43,4 +43,4 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: code-coverage-report
-        path: ./**/TestResults/**/*.coverage
+        path: Calculator/Calculator.Core.Tests/TestResults/*.coverage
