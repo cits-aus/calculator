@@ -3,4 +3,27 @@
 GET {{Calculator.API_HostAddress}}/weatherforecast/
 Accept: application/json
 
+
+
+###
+
+GET {{Calculator.API_HostAddress}}/add/6/7
+Accept: application/json
+
+###
+
+GET {{Calculator.API_HostAddress}}/multiply/6/7
+Accept: application/json
+
+###
+
+GET {{Calculator.API_HostAddress}}/divide/6/7
+Accept: application/json
+
+###
+
+//send wrong data type in request
+GET {{Calculator.API_HostAddress}}/add/a/7
+Accept: application/json
+
 ###
